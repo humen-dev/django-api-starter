@@ -1,11 +1,13 @@
-WEB := docker compose exec web
+WEB      := docker compose exec web
+WEB_PROD := docker compose -f docker-compose.prod.yml exec web
 
-.PHONY: help build up down restart logs shell \
+.PHONY: help build up down down-v restart logs shell \
+        prod-build prod-up prod-down prod-logs \
         migrate makemigrations createsuperuser djshell \
         lint format
 
 help:
-	@echo "Docker"
+	@echo "Docker (dev)"
 	@echo "  build            Build the Docker image"
 	@echo "  up               Start all services (detached)"
 	@echo "  down             Stop all services"
@@ -13,6 +15,12 @@ help:
 	@echo "  restart          Restart the web service"
 	@echo "  logs             Tail logs from all services"
 	@echo "  shell            Open a bash shell in the web container"
+	@echo ""
+	@echo "Docker (prod)"
+	@echo "  prod-build       Build the production image"
+	@echo "  prod-up          Start production services (detached)"
+	@echo "  prod-down        Stop production services"
+	@echo "  prod-logs        Tail production logs"
 	@echo ""
 	@echo "Django"
 	@echo "  migrate          Apply database migrations"
@@ -24,7 +32,7 @@ help:
 	@echo "  lint             Run ruff linter"
 	@echo "  format           Run ruff formatter"
 
-# Docker
+# Docker (dev)
 
 build:
 	docker compose build
@@ -46,6 +54,19 @@ logs:
 
 shell:
 	$(WEB) bash
+
+# Docker (prod)
+
+prod-build:
+	docker compose --env-file .env.prod -f docker-compose.prod.yml build
+
+prod-up:
+	docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+prod-down:
+	docker compose -f docker-compose.prod.yml down
+
+prod-logs:
+	docker compose -f docker-compose.prod.yml logs -f
 
 # Django
 

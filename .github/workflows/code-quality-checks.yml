@@ -20,19 +20,15 @@ jobs:
 
       - uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
           enable-cache: true
 
-      - name: Set up Python 3.13
-        run: uv python install 3.13
+      - name: Set up Python 3.14
+        run: uv python install 3.14
 
       - run: uv sync --frozen --dev
 
-      - name: Black formatter
-        run: uv run black --check . --target-version py313
+      - name: Ruff lint
+        run: uv run ruff check .
 
-      - name: Isort
-        run: uv run isort --check .
-
-      - name: Flake8
-        run: uv run flake8 .
+      - name: Ruff format
+        run: uv run ruff format --check .
