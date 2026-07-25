@@ -13,6 +13,9 @@ dev = [
     "ruff>=0.16.0",
 ]
 
+[tool.ruff.lint]
+ignore = ["EXE001", "EXE002"]
+
 [tool.ruff.format]
 quote-style = "single"
 
