@@ -12,6 +12,13 @@ dependencies = [
 dev = [
     "ruff>=0.16.0",
 ]
+tests = [
+    "coverage>=7.15.2",
+    "factory-boy>=3.3.3",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.12.0",
+]
 
 [tool.ruff.lint]
 ignore = ["EXE001", "EXE002"]
