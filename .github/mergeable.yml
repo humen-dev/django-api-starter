@@ -1,0 +1,18 @@
+version: 2
+mergeable:
+  - when: pull_request.*
+    validate:
+      - do: title
+        must_exclude:
+          regex: ^\[WIP\]
+      - do: label
+        must_exclude:
+          regex: "wip"
+      - do: description
+        no_empty:
+          enabled: true
+          message: Description should not be empty. Provide detail with **what** was changed, **why** it was changed, and **how** it was changed.
+      - do: assignee
+        min:
+          count: 1
+          message: At least one assignee is required on this pull request.

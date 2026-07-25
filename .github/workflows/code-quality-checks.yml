@@ -1,0 +1,38 @@
+name: Code Quality Tools
+
+run-name: Running code quality tools 🔎
+
+on: [pull_request]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.9.5"
+          enable-cache: true
+
+      - name: Set up Python 3.13
+        run: uv python install 3.13
+
+      - run: uv sync --frozen --dev
+
+      - name: Black formatter
+        run: uv run black --check . --target-version py313
+
+      - name: Isort
+        run: uv run isort --check .
+
+      - name: Flake8
+        run: uv run flake8 .
