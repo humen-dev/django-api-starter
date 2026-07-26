@@ -1,5 +1,3 @@
-from typing import ClassVar
-
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -9,7 +7,7 @@ from apps.users.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields: ClassVar[list[str]] = ['id', 'email', 'first_name', 'last_name']
+        fields = ['id', 'email', 'first_name', 'last_name']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -17,7 +15,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields: ClassVar[list[str]] = ['email', 'first_name', 'last_name', 'password']
+        fields = ['email', 'first_name', 'last_name', 'password']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
