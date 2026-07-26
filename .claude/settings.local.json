@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(cd \"D:\\\\Code\\\\PycharmProjects\\\\contact_hub_api\"; Get-ChildItem -Recurse -Directory -Depth 2 | Where-Object { $_.Name -ne \"__pycache__\" -and $_.Name -ne \".venv\" -and $_.Name -ne \".idea\" } | Select-Object FullName)"
+      "PowerShell(cd \"D:\\\\Code\\\\PycharmProjects\\\\contact_hub_api\"; Get-ChildItem -Recurse -Directory -Depth 2 | Where-Object { $_.Name -ne \"__pycache__\" -and $_.Name -ne \".venv\" -and $_.Name -ne \".idea\" } | Select-Object FullName)",
+      "PowerShell(New-Item *)"
     ]
   }
 }
