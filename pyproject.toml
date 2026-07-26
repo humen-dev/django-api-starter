@@ -4,6 +4,10 @@ version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
     "django>=6.0.7",
+    "django-filter>=26.1",
+    "djangorestframework>=3.17.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "drf-spectacular>=0.30.0",
     "gunicorn>=26.0.0",
     "psycopg2-binary>=2.9.12",
 ]
@@ -19,6 +23,13 @@ tests = [
     "pytest-cov>=7.1.0",
     "pytest-django>=4.12.0",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = 'contact_hub_api.settings'
+python_files = ['test_*.py']
+python_classes = ['Test*']
+python_functions = ['test_*']
+addopts = '--strict-markers -v'
 
 [tool.ruff.lint]
 ignore = ["EXE001", "EXE002"]
