@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.conf import settings
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -11,7 +13,7 @@ from tools.authentication import delete_auth_cookies, set_auth_cookies
 
 
 class RegisterView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes: ClassVar = [AllowAny]
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -24,7 +26,7 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes: ClassVar = [AllowAny]
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -38,7 +40,9 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
-        refresh_token = request.COOKIES.get(settings.SIMPLE_JWT.get('AUTH_COOKIE_REFRESH'))
+        refresh_token = request.COOKIES.get(
+            settings.SIMPLE_JWT.get('AUTH_COOKIE_REFRESH')
+        )
         if refresh_token:
             try:
                 RefreshToken(refresh_token).blacklist()
@@ -50,10 +54,12 @@ class LogoutView(APIView):
 
 
 class TokenRefreshView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes: ClassVar = [AllowAny]
 
     def post(self, request):
-        refresh_token = request.COOKIES.get(settings.SIMPLE_JWT.get('AUTH_COOKIE_REFRESH'))
+        refresh_token = request.COOKIES.get(
+            settings.SIMPLE_JWT.get('AUTH_COOKIE_REFRESH')
+        )
         if not refresh_token:
             return Response(
                 {'detail': 'Refresh token not provided.'},

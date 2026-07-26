@@ -1,7 +1,6 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from rest_framework_simplejwt.tokens import RefreshToken
 
 from tools.tests import USER_PASSWORD, BaseAPITestCase
 
@@ -34,12 +33,16 @@ class TestRegisterView(BaseAPITestCase):
 
     def test_duplicate_email_returns_400(self):
         user = self.create_user()
-        response = self.client.post(self.url, {'email': user.email, 'password': 'strongpassword'})
+        response = self.client.post(
+            self.url, {'email': user.email, 'password': 'strongpassword'}
+        )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_password_too_short_returns_400(self):
-        response = self.client.post(self.url, {'email': 'new@example.com', 'password': 'short'})
+        response = self.client.post(
+            self.url, {'email': 'new@example.com', 'password': 'short'}
+        )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -56,7 +59,9 @@ class TestLoginView(BaseAPITestCase):
         self.user = self.create_user()
 
     def test_success(self):
-        response = self.client.post(self.url, {'email': self.user.email, 'password': USER_PASSWORD})
+        response = self.client.post(
+            self.url, {'email': self.user.email, 'password': USER_PASSWORD}
+        )
 
         assert response.status_code == status.HTTP_200_OK
         assert response.data['email'] == self.user.email
@@ -64,19 +69,25 @@ class TestLoginView(BaseAPITestCase):
         assert 'refresh_token' in response.cookies
 
     def test_invalid_password_returns_400(self):
-        response = self.client.post(self.url, {'email': self.user.email, 'password': 'wrongpassword'})
+        response = self.client.post(
+            self.url, {'email': self.user.email, 'password': 'wrongpassword'}
+        )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_nonexistent_email_returns_400(self):
-        response = self.client.post(self.url, {'email': 'nobody@example.com', 'password': USER_PASSWORD})
+        response = self.client.post(
+            self.url, {'email': 'nobody@example.com', 'password': USER_PASSWORD}
+        )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_inactive_user_returns_400(self):
         self.user.is_active = False
         self.user.save()
-        response = self.client.post(self.url, {'email': self.user.email, 'password': USER_PASSWORD})
+        response = self.client.post(
+            self.url, {'email': self.user.email, 'password': USER_PASSWORD}
+        )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
