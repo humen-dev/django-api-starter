@@ -20,6 +20,13 @@ tests = [
     "pytest-django>=4.12.0",
 ]
 
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = 'contact_hub_api.settings'
+python_files = ['test_*.py']
+python_classes = ['Test*']
+python_functions = ['test_*']
+addopts = '--strict-markers -v'
+
 [tool.ruff.lint]
 ignore = ["EXE001", "EXE002"]
 
