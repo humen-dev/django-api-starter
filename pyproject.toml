@@ -32,7 +32,7 @@ python_functions = ['test_*']
 addopts = '--strict-markers -v'
 
 [tool.ruff.lint]
-ignore = ["EXE001", "EXE002"]
+ignore = ["EXE001", "EXE002", "RUF012"]
 
 [tool.ruff.format]
 quote-style = "single"

@@ -24,10 +24,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-party
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'drf_spectacular',
     # Local
+    'apps.users',
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +130,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'AUTH_COOKIE': 'access_token',
+    'AUTH_COOKIE_REFRESH': 'refresh_token',
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_SECURE': not DEBUG,
     'AUTH_COOKIE_SAMESITE': 'Lax',
